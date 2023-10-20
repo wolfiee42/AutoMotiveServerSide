@@ -29,9 +29,12 @@ const client = new MongoClient(uri, {
 async function run() {
     const carCollection = client.db("carDB").collection("cars");
     try {
+        
         app.get('/', (req, res) => {
             res.send("sup niggas")
         })
+
+
 
         app.post('/cardetails', async (req, res) => {
             const carinfo = req.body;
@@ -39,11 +42,17 @@ async function run() {
             res.send(cursor);
             console.log(cursor);
         })
+
+
+
         app.get('/cardetails', async (req, res) => {
             const result = await carCollection.find().toArray();
             res.send(result);
             console.log(result);
         })
+
+
+
         app.get('/cardetails/:brand', async (req, res) => {
             const brandname = req.params.brand
             const query = { brand: brandname };

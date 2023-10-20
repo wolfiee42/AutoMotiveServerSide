@@ -65,10 +65,10 @@ async function run() {
 
         app.get('/cardetails/:brand/:id', async (req, res) => {
             const brandname = req.params.brand;
-            const queryb = { brand: brandname };
             const id = req.params.id
             const queryi = { _id: new ObjectId(id) };
-            const result = await carCollection.findOne(queryb, queryi);
+            const queryb = { brand: brandname };
+            const result = await carCollection.findOne(queryi, queryb);
             res.send(result);
             console.log(result);
         })

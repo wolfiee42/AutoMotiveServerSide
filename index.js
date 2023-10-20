@@ -28,6 +28,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
     const carCollection = client.db("carDB").collection("cars");
+    const productCollection = client.db("productcB").collection("productcars");
     try {
 
         app.get('/', (req, res) => {
@@ -74,15 +75,15 @@ async function run() {
         })
 
 
-        app.delete('/cardetails/:brand/:id', async (req, res) => {
-            const brandname = req.params.brand;
-            const queryb = { brand: brandname };
-            const id = req.params.id
-            const queryi = { _id: new ObjectId(id) };
-            const result = await carCollection.deleteOne(queryi, queryb);
-            res.send(result);
-            console.log(result);
-        })
+        // app.delete('/cardetails/:brand/:id', async (req, res) => {
+        //     const brandname = req.params.brand;
+        //     const queryb = { brand: brandname };
+        //     const id = req.params.id
+        //     const queryi = { _id: new ObjectId(id) };
+        //     const result = await carCollection.deleteOne(queryi, queryb);
+        //     res.send(result);
+        //     console.log(result);
+        // })
 
         // app.put('/cardetails/:brand/:id', async (req, res) => {
         //     const brandname = req.params.brand;
@@ -105,8 +106,24 @@ async function run() {
         //       console.log(result);
         // })
 
+        app.post('/productdetails', async (req, res) => {
+            const info = req.body;
+            const cursor = await productCollection.insertOne(info);
+            res.send(cursor);
+            console.log(cursor);
+        })
+        app.get('/productdetails', async(req, res)=>{
+            const result = await productCollection.find().toArray();
+            res.send(result);
+            console.log(result);
+        })
 
-        await client.connect();
+
+
+
+
+
+        // await client.connect();
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {

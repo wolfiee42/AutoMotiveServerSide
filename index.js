@@ -75,16 +75,6 @@ async function run() {
         })
 
 
-        // app.delete('/cardetails/:brand/:id', async (req, res) => {
-        //     const brandname = req.params.brand;
-        //     const queryb = { brand: brandname };
-        //     const id = req.params.id
-        //     const queryi = { _id: new ObjectId(id) };
-        //     const result = await carCollection.deleteOne(queryi, queryb);
-        //     res.send(result);
-        //     console.log(result);
-        // })
-
         // app.put('/cardetails/:brand/:id', async (req, res) => {
         //     const brandname = req.params.brand;
         //     const car = req.body
@@ -112,8 +102,16 @@ async function run() {
             res.send(cursor);
             console.log(cursor);
         })
-        app.get('/productdetails', async(req, res)=>{
+        app.get('/productdetails', async (req, res) => {
             const result = await productCollection.find().toArray();
+            res.send(result);
+            console.log(result);
+        })
+
+        app.delete('/productdetails/:id', async (req, res) => {
+            const id = req.params.id;
+            const cursor = { _id: id };
+            const result = await productCollection.deleteOne(cursor);
             res.send(result);
             console.log(result);
         })

@@ -75,26 +75,26 @@ async function run() {
         })
 
 
-        // app.put('/cardetails/:brand/:id', async (req, res) => {
-        //     const brandname = req.params.brand;
-        //     const car = req.body
-        //     const id = req.params.id;
-        //     const queryi = { _id: new ObjectId(id) };
-        //     const queryb = { brand: brandname };
-        //     const options = { upsert: true };
-        //     const updateDoc = {
-        //         $set: {
-        //             name: car.name,
-        //             imageurl: car.imageurl,
-        //             price: car.price,
-        //             description: car.description,
-        //             brand: car.brand
-        //         },
-        //       };
-        //       const result = await carCollection.updateOne(queryi, queryb, updateDoc, options);
-        //       res.send(result);
-        //       console.log(result);
-        // })
+        app.put('/cardetails/brand/:id', async (req, res) => {
+            const id = req.params.id;
+            const queryi = { _id: new ObjectId(id) };
+            // const brandname = req.params.brand;
+            // const queryb = { brand: brandname };
+            const car = req.body
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    name: car.name,
+                    imageurl: car.imageurl,
+                    price: car.price,
+                    description: car.description,
+                    brand: car.brand
+                },
+              };
+              const result = await carCollection.updateOne(queryi, updateDoc, options);
+              res.send(result);
+              console.log(result);
+        })
 
         app.post('/productdetails', async (req, res) => {
             const info = req.body;
